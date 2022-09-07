@@ -1,13 +1,7 @@
 {
-    "name": "chrisboulton/php-diff",
+    "name": "rollerozxa/php-diff",
     "type": "library",
-    "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays).",
-    "authors": [
-        {
-            "name": "Chris Boulton",
-            "email": "@chrisboulton"
-        }
-    ],
+    "description": "Fork of chrisboulton/php-diff",
     "autoload": {
         "psr-0": {
            "Diff": "lib/"
