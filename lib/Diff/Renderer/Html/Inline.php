@@ -54,32 +54,22 @@ class Diff_Renderer_Html_Inline extends Diff_Renderer_Html_Array
 	{
 		$changes = parent::render();
 		$html = '';
-		if(empty($changes)) {
+		if (empty($changes)) {
 			return $html;
 		}
 
 		$html .= '<table class="diff diff-inline">';
-		$html .= '<thead>';
-		$html .= '<tr>';
-		$html .= '<th>Old</th>';
-		$html .= '<th>New</th>';
-		$html .= '<th>Differences</th>';
-		$html .= '</tr>';
-		$html .= '</thead>';
+
 		foreach($changes as $i => $blocks) {
 			// If this is a separate block, we're condensing code so output ...,
 			// indicating a significant portion of the code has been collapsed as
 			// it is the same
 			if($i > 0) {
-				$html .= '<tbody class="Skipped">';
-				$html .= '<th>&hellip;</th>';
-				$html .= '<th>&hellip;</th>';
-				$html .= '<td>&nbsp;</td>';
-				$html .= '</tbody>';
+				$html .= '<tr class="skip"><th>&hellip;</th><th>&hellip;</th><td>&nbsp;</td></tr>';
 			}
 
 			foreach($blocks as $change) {
-				$html .= '<tbody class="Change'.ucfirst($change['tag']).'">';
+				$html .= '<tbody class="chng-'.$change['tag'].'">';
 				// Equal changes should be shown on both sides of the diff
 				if($change['tag'] == 'equal') {
 					foreach($change['base']['lines'] as $no => $line) {
@@ -88,7 +78,7 @@ class Diff_Renderer_Html_Inline extends Diff_Renderer_Html_Array
 						$html .= '<tr>';
 						$html .= '<th>'.$fromLine.'</th>';
 						$html .= '<th>'.$toLine.'</th>';
-						$html .= '<td class="Left">'.$line.'</td>';
+						$html .= '<td class="d-left">'.$line.'</td>';
 						$html .= '</tr>';
 					}
 				}
@@ -99,7 +89,7 @@ class Diff_Renderer_Html_Inline extends Diff_Renderer_Html_Array
 						$html .= '<tr>';
 						$html .= '<th>&nbsp;</th>';
 						$html .= '<th>'.$toLine.'</th>';
-						$html .= '<td class="Right"><ins>'.$line.'</ins>&nbsp;</td>';
+						$html .= '<td class="d-right"><ins>'.$line.'</ins>&nbsp;</td>';
 						$html .= '</tr>';
 					}
 				}
@@ -110,7 +100,7 @@ class Diff_Renderer_Html_Inline extends Diff_Renderer_Html_Array
 						$html .= '<tr>';
 						$html .= '<th>'.$fromLine.'</th>';
 						$html .= '<th>&nbsp;</th>';
-						$html .= '<td class="Left"><del>'.$line.'</del>&nbsp;</td>';
+						$html .= '<td class="d-left"><del>'.$line.'</del>&nbsp;</td>';
 						$html .= '</tr>';
 					}
 				}
@@ -121,7 +111,7 @@ class Diff_Renderer_Html_Inline extends Diff_Renderer_Html_Array
 						$html .= '<tr>';
 						$html .= '<th>'.$fromLine.'</th>';
 						$html .= '<th>&nbsp;</th>';
-						$html .= '<td class="Left"><span>'.$line.'</span></td>';
+						$html .= '<td class="d-left"><span>'.$line.'</span></td>';
 						$html .= '</tr>';
 					}
 
@@ -130,7 +120,7 @@ class Diff_Renderer_Html_Inline extends Diff_Renderer_Html_Array
 						$html .= '<tr>';
 						$html .= '<th>&nbsp;</th>';
 						$html .= '<th>'.$toLine.'</th>';
-						$html .= '<td class="Right"><span>'.$line.'</span></td>';
+						$html .= '<td class="d-right"><span>'.$line.'</span></td>';
 						$html .= '</tr>';
 					}
 				}
